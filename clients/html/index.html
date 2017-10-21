@@ -1,0 +1,69 @@
+
+
+
+<!--<%@page contentType="text/html" pageEncoding="UTF-8"%>-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title> Chart emulation </title>
+		<link rel="stylesheet" href="../css/Treant.css">
+		<link rel="stylesheet" href="../css/super-simple.css">
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script>
+			var socket;
+			$(function () {
+				socket = io();
+				socket.on('arraysender',function(ids){
+					for (var i = ids.length - 1; i >= 0; i--) {
+						document.getElementById(ids[i]).disabled=true;
+						document.getElementById(ids[i]).value=document.getElementById(ids[i]).getAttribute("data-result");
+					}
+				});
+				socket.on('notifyall',function(casella){
+					//alert(""+casella+"");
+					document.getElementById(casella).disabled=true;
+					document.getElementById(casella).value=document.getElementById(casella).getAttribute("data-result");
+				});
+			});
+		</script>
+
+		<script>
+			function check (event) {
+				if(event.keyCode===13){
+					if(parseFloat(event.target.value) == event.target.getAttribute("data-result")){
+						//alert(event.target.value);
+						socket.emit('id-cas', event.target.getAttribute("id"));
+
+					}
+					else{alert("Wrong! Capra");}
+					
+				}
+			}
+
+			
+
+
+
+		</script>
+    </head>
+    <body>
+    	<div id="expr"></div>
+		<div class="chart" id="tree-simple" style="width: 80%; ">
+		</div>
+
+		<script src="../js/raphael.js"></script>
+		<script src="../js/Treant.js"></script>
+		<script src="../trees/super-simple.js"></script>
+
+		<script>
+			new Treant(simple_chart_config);
+		</script>
+
+    </body>
+</html>
