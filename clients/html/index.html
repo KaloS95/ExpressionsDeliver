@@ -15,10 +15,17 @@
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+
+		<script src="../js/raphael.js"></script>
+		<script src="../js/Treant.js"></script>
 		<script>
 			var socket;
 			$(function () {
 				socket = io();
+				socket.on('sendtree',function(tree){
+						new Treant(tree);
+				});
 				socket.on('arraysender',function(ids){
 					for (var i = ids.length - 1; i >= 0; i--) {
 						document.getElementById(ids[i]).disabled=true;
@@ -57,13 +64,11 @@
 		<div class="chart" id="tree-simple" style="width: 80%; ">
 		</div>
 
-		<script src="../js/raphael.js"></script>
-		<script src="../js/Treant.js"></script>
-		<script src="../trees/super-simple.js"></script>
+		<!--script src="../trees/super-simple.js"></script>
 
 		<script>
 			new Treant(simple_chart_config);
-		</script>
+		</script-->
 
     </body>
 </html>
