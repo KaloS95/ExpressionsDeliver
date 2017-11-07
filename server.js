@@ -5,6 +5,7 @@ var app=express();
 var http=require('http').Server(app);
 
 //socket io
+//creo istanza io, struttura costruttore
 var io=require('socket.io')(http);
 
 //files access
@@ -19,12 +20,16 @@ var tregen=require(__dirname+'/treeGenesis.js');
 
 var ids_cell=[];
 
-
+//amount sa quanti alberi di espressioni sono presenti
 var amount=require(__dirname+'/clients/trees/number_trees.json').amount;
+/*console.log(parseInt(Math.random()*amount));
 console.log(parseInt(Math.random()*amount));
-console.log(parseInt(Math.random()*amount));
-console.log(parseInt(Math.random()*amount));
+console.log(parseInt(Math.random()*amount));*/
+
+//prende un numero randomico dal set e 
+//require apre jsons in modo non rischioso
 var tree=require(__dirname+'/clients/trees/tree'+/*parseInt(Math.random()*amount)*/2+'.json');
+//prima di questa riga i file in quella cartella non possono essere caricati altrimenti
 app.use(express.static(__dirname+'/clients'));
 
 
@@ -32,29 +37,23 @@ app.get('/', function(req, res){
 res.sendFile(__dirname + '/clients/html/index.html');
 });
 
-
+//parte professore
 app.get('/addexpressions', function(req, res){
 res.sendFile(__dirname + '/clients/html/addexpressions.html');
 });
 
+
+
 app.get('/sendexp', function(req, res){
 	var amount;
-	/*fs.readFileSync(__dirname+"/clients/trees/number_trees.txt","utf8",function(err,data){
-		amount=parseInt(data);
-		if(err){console.log(err);}
-		console.log("!!!!");
-		console.log(amount);
-		console.log(data);
-		console.log("!!!!!");
-	});*/
 	//var amount=require(__dirname+'/clients/trees/number_trees.json').amount;
 	var  amount =JSON.parse(fs.readFileSync(__dirname+'/clients/trees/number_trees.json')).amount;
+	//prendo l'espressione e la salvo in ris
 	console.log(req.query.expression);
 	var ris=(parser.parse(req.query.expression));
+	//crea l'albero dall'espressione appena presa
 	var tree=tregen.TreeGenesis(ris);
-		console.log("!!!!");
-		console.log(amount);
-		console.log("!!!!!");
+
 	fs.writeFile(__dirname+"/clients/trees/tree"+amount+".json",tree,function(err){
 		if(!err){fs.writeFile(__dirname+"/clients/trees/number_trees.json",'{"amount": '+(parseInt(amount)+1)+"}",function(err){
 			if(err){console.log(err);}
@@ -63,8 +62,6 @@ app.get('/sendexp', function(req, res){
 		else{console.log(err);}
 		
 	});
-
-	console.log(tregen.TreeGenesis(ris));
 	
 });
 
@@ -97,7 +94,7 @@ var create_socket = function(socket)
 
 
 	}
-
+//quando qualcuno si connette mi simula la creazione del "ponte" struttura socket mantenuta e non come nei browser che viene killata
 io.on('connection', create_socket);
 
 

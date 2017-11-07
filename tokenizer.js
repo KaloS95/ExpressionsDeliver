@@ -1,3 +1,4 @@
+//Tokenizza la stringa in formato array
 function Token(type, value) {
 	this.type = type;
 	this.value = value;
