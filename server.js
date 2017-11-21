@@ -28,7 +28,7 @@ console.log(parseInt(Math.random()*amount));*/
 
 //prende un numero randomico dal set e 
 //require apre jsons in modo non rischioso
-var tree=require(__dirname+'/clients/trees/tree'+/*parseInt(Math.random()*amount)*/2+'.json');
+var tree=require(__dirname+'/clients/trees/tree'+/*parseInt(Math.random()*amount)*/0+'.json');
 //prima di questa riga i file in quella cartella non possono essere caricati altrimenti
 app.use(express.static(__dirname+'/clients'));
 

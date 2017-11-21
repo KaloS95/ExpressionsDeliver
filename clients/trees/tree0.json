@@ -1,17 +1,17 @@
 	{
     "chart": {
         "container": "#tree-simple",
-		"rootOrientation": "SOUTH"
+		"rootOrientation": "EAST"
     },
     
     "nodeStructure": {
-                "innerHTML": "-<br/><input id='0' type='text' onkeydown='check(event)' data-result='-8.75'/>",
+                "innerHTML": "-<br/><input id='0' type='text' onkeydown='check(event)' data-result='-8.75'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
         "children": [
             {
-        "innerHTML": "*<br/><input id='4' type='text' onkeydown='check(event)' data-result='2.25'/>",
+        "innerHTML": "*<br/><input id='4' type='text' onkeydown='check(event)' data-result='2.25'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
         "children": [
             {
-        "innerHTML": "+<br/><input id='8' type='text' onkeydown='check(event)' data-result='3.0'/>",
+        "innerHTML": "+<br/><input id='8' type='text' onkeydown='check(event)' data-result='3.0'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
         "children": [
             {
         "text": { "name": 1.0 }
@@ -22,7 +22,7 @@
         ]
             },
             {
-        "innerHTML": "/<br/><input id='5' type='text' onkeydown='check(event)' data-result='0.75'/>",
+        "innerHTML": "/<br/><input id='5' type='text' onkeydown='check(event)' data-result='0.75'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
         "children": [
             {
         "text": { "name": 3.0 }
@@ -35,7 +35,7 @@
         ]
             },
             {
-        "innerHTML": "+<br/><input id='1' type='text' onkeydown='check(event)' data-result='11.0'/>",
+        "innerHTML": "+<br/><input id='1' type='text' onkeydown='check(event)' data-result='11.0'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
         "children": [
             {
         "text": { "name": 5.0 }
