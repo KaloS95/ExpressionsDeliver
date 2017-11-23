@@ -21,25 +21,31 @@
 		<script src="../js/Treant.js"></script>
 		<script>
 			var socket;
+			var name;
 			$(function () {
 				socket = io();
 				socket.on('sendtree',function(tree){
+
 						new Treant(tree);
+						name=prompt("inserisci il tuo nome e cognome");
+						socket.emit('name', name);
 				});
 				//riceve lista caselle che sono state riempite
 				//completo tante caselle con giusto ris
 				socket.on('arraysender',function(ids){
 					for (var i = ids.length - 1; i >= 0; i--) {
-						document.getElementById(ids[i]).disabled=true;
-						document.getElementById(ids[i]).value=document.getElementById(ids[i]).getAttribute("data-result");
+						document.getElementById(ids[i].cell).disabled=true;
+						document.getElementById(ids[i].cell).value=document.getElementById(ids[i].cell).getAttribute("data-result");
+						document.getElementById("author_"+ids[i].cell).value=ids[i].author;
 					}
 				});
 				//man mano che un risultato corretto 
 				//completo una casella con giusto ris
-				socket.on('notifyall',function(casella){
+				socket.on('notifyall',function(casella, author){
 					//alert(""+casella+"");
 					document.getElementById(casella).disabled=true;
 					document.getElementById(casella).value=document.getElementById(casella).getAttribute("data-result");
+					document.getElementById("author_"+casella).value=author;
 				});
 			});
 		</script>

@@ -11,7 +11,7 @@
         "innerHTML": "*<br/><input id='4' type='text' onkeydown='check(event)' data-result='2.25'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
         "children": [
             {
-        "innerHTML": "+<br/><input id='8' type='text' onkeydown='check(event)' data-result='3.0'/><br/><input id='autor'  type='text' disabled onkeydown='checkAutor(event)' autor=''/>",
+        "innerHTML": "+<br/><input id='8' type='text' onkeydown='check(event)' data-result='3.0'/><br/><input id='author_8'  type='text' disabled onkeydown='checkAutor(event)' />",
         "children": [
             {
         "text": { "name": 1.0 }

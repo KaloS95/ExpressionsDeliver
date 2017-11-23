@@ -20,6 +20,7 @@ var tregen=require(__dirname+'/treeGenesis.js');
 
 var ids_cell=[];
 
+
 //amount sa quanti alberi di espressioni sono presenti
 var amount=require(__dirname+'/clients/trees/number_trees.json').amount;
 /*console.log(parseInt(Math.random()*amount));
@@ -73,6 +74,7 @@ var create_socket = function(socket)
 	{
 	var id = id_n;
 	id_n++;
+	var name;
 	
 	console.log('user ' + id + ' connected');
 	socket.emit('sendtree',tree);
@@ -86,13 +88,13 @@ var create_socket = function(socket)
 		{
 		console.log('user ' + id + ' completed '+ id_casella);
 		//quando ricevo che l'id della casella ha il risultato corretto, mando broadcast
-		io.emit('notifyall', id_casella);
+		io.emit('notifyall', id_casella, name);
 		//popola array di caselle disabled
-		ids_cell.push(id_casella);
+		ids_cell.push({cell: id_casella, author: name});
 		});
-
-
-
+	socket.on('name',function(arg){
+		name=arg;
+	});
 	}
 //quando qualcuno si connette mi simula la creazione del "ponte" struttura socket mantenuta e non come nei browser che viene killata
 io.on('connection', create_socket);
