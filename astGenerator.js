@@ -6,8 +6,8 @@ function ASTNode(token, leftChildNode, rightChildNode) {
 
 
 function parse(inp){
-	var outStack=[];
-	var opStack=[];
+	var outStack = [];
+	var opStack = [];
 
 	Array.prototype.addNode = function (operatorToken) {
 		rightChildNode = this.pop();
@@ -20,18 +20,18 @@ function parse(inp){
 	};
 
 	var assoc = {
-		"^" : "right",
-		"*" : "left",
-		"/" : "left",
-		"+" : "left",
+		"^" : "right", 
+		"*" : "left", 
+		"/" : "left", 
+		"+" : "left", 
 		"-" : "left"
 	};
 
 	var prec = {
-		"^" : 4,
-		"*" : 3,
-		"/" : 3,
-		"+" : 2,
+		"^" : 4, 
+		"*" : 3, 
+		"/" : 3, 
+		"+" : 2, 
 		"-" : 2
 	};
 
@@ -44,7 +44,7 @@ function parse(inp){
 	};
 
 	//tokenize
-	var tokens=tokenize(inp);
+	var tokens = tokenize(inp);
 
 	tokens.forEach(function(v) {
 		//If the token is a number, then push it to the output stack
@@ -69,13 +69,13 @@ function parse(inp){
 		} 
 		//If the token is an operator, o1, then:
 		else if(v.type == "Operator") {
-			  //while there is an operator token o2, at the top of the operator stack and either
-			  while (opStack.peek() && (opStack.peek().type === "Operator") 
+			 //while there is an operator token o2, at the top of the operator stack and either
+			 while (opStack.peek() && (opStack.peek().type === "Operator") 
 				//o1 is left-associative and its precedence is less than or equal to that of o2, or
 				&& ((v.associativity() === "left" && v.precedence() <= opStack.peek().precedence())
-					//o1 is right associative, and has precedence less than that of o2,
+					//o1 is right associative, and has precedence less than that of o2, 
 					|| (v.associativity() === "right" && v.precedence() < opStack.peek().precedence()))) {
-			  	outStack.addNode(opStack.pop());
+			 	outStack.addNode(opStack.pop());
 			}
 			//at the end of iteration push o1 onto the operator stack
 			opStack.push(v);

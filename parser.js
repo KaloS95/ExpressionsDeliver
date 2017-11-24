@@ -1,27 +1,28 @@
 //quando viene importato cosa deve essere disponibile dall'esterno
-module.exports={parse};
+module.exports = {parse};
+
 
 function parse(inp){
-	var outQueue=[];
-	var opStack=[];
+	var outQueue = [];
+	var opStack = [];
 
 	Array.prototype.peek = function() {
 		return this.slice(-1)[0];
 	};
 
 	var assoc = {
-		"^" : "right",
-		"*" : "left",
-		"/" : "left",
-		"+" : "left",
+		"^" : "right", 
+		"*" : "left", 
+		"/" : "left", 
+		"+" : "left", 
 		"-" : "left"
 	};
 
 	var prec = {
-		"^" : 4,
-		"*" : 3,
-		"/" : 3,
-		"+" : 2,
+		"^" : 4, 
+		"*" : 3, 
+		"/" : 3, 
+		"+" : 2, 
 		"-" : 2
 	};
 
@@ -34,7 +35,7 @@ function parse(inp){
 	};
 
 	//tokenize
-	var tokens=tokenize(inp);
+	var tokens = tokenize(inp);
 
 	tokens.forEach(function(v) {
 		//If the token is a number, then push it to the output queue
@@ -59,13 +60,13 @@ function parse(inp){
 		} 
 		//If the token is an operator, o1, then:
 		else if(v.type == "Operator") {
-			  //while there is an operator token o2, at the top of the operator stack and either
-			  while (opStack.peek() && (opStack.peek().type === "Operator") 
+			 //while there is an operator token o2, at the top of the operator stack and either
+			 while (opStack.peek() && (opStack.peek().type === "Operator") 
 				//o1 is left-associative and its precedence is less than or equal to that of o2, or
 				&& ((v.associativity() === "left" && v.precedence() <= opStack.peek().precedence())
-					//o1 is right associative, and has precedence less than that of o2,
+					//o1 is right associative, and has precedence less than that of o2, 
 					|| (v.associativity() === "right" && v.precedence() < opStack.peek().precedence()))) {
-			  	outQueue.push(opStack.pop());
+			 	outQueue.push(opStack.pop());
 			}
 			//at the end of iteration push o1 onto the operator stack
 			opStack.push(v);
@@ -101,4 +102,109 @@ function parse(inp){
 
 function toString(rpn) {
 	return rpn.map(token => token.value).join(" ");
+}
+
+
+// =================================================================
+// Tokenizer
+// =================================================================
+
+//Tokenizza la stringa in formato array
+Token = function Token(type, value) {
+	this.type = type;
+	this.value = value;
+}
+
+function isComma(ch) {
+	return /, /.test(ch);
+}
+
+function isDigit(ch) {
+	return /\d/.test(ch);
+}
+
+function isLetter(ch) {
+	return /[a-z]/i.test(ch);
+}
+
+function isOperator(ch) {
+	return /\+|-|\*|\/|\^/.test(ch);
+}
+
+function isLeftParenthesis(ch) {
+	return /\(/.test(ch);
+}
+
+function isRightParenthesis(ch) {
+	return /\)/.test(ch);
+}
+
+tokenize = function tokenize(str) {
+	str.replace(/\s+/g, "");
+	str = str.split("");
+
+	var result = [];
+	var letterBuffer = [];
+	var numberBuffer = [];
+
+	str.forEach(function (char, idx) {
+		if(isDigit(char)) {
+			numberBuffer.push(char);
+		} else if(char == ".") {
+			numberBuffer.push(char);
+		} else if (isLetter(char)) {
+			if(numberBuffer.length) {
+				emptyNumberBufferAsLiteral();
+				result.push(new Token("Operator", "*"));
+			}
+			letterBuffer.push(char);
+		} else if (isOperator(char)) {
+			emptyNumberBufferAsLiteral();
+			emptyLetterBufferAsVariables();
+			result.push(new Token("Operator", char));
+		} else if (isLeftParenthesis(char)) {
+			if(letterBuffer.length) {
+				result.push(new Token("Function", letterBuffer.join("")));
+				letterBuffer = [];
+			} else if(numberBuffer.length) {
+				emptyNumberBufferAsLiteral();
+				result.push(new Token("Operator", "*"));
+			}
+			result.push(new Token("Left Parenthesis", char));
+		} else if (isRightParenthesis(char)) {
+			emptyLetterBufferAsVariables();
+			emptyNumberBufferAsLiteral();
+			result.push(new Token("Right Parenthesis", char));
+		} else if (isComma(char)) {
+			emptyNumberBufferAsLiteral();
+			emptyLetterBufferAsVariables();
+			result.push(new Token("Function Argument Separator", char));
+		}
+	});
+	if (numberBuffer.length) {
+		emptyNumberBufferAsLiteral();
+	}
+	if(letterBuffer.length) {
+		emptyLetterBufferAsVariables();
+	}
+	return result;
+
+	function emptyLetterBufferAsVariables() {
+		var l = letterBuffer.length;
+		for (var i = 0; i < l; i++) {
+			result.push(new Token("Variable", letterBuffer[i]));
+  if(i< l-1) { //there are more Variables left
+  	result.push(new Token("Operator", "*"));
+  }
+ }
+ letterBuffer = [];
+ }
+
+ function emptyNumberBufferAsLiteral() {
+ 	if(numberBuffer.length) {
+ 		result.push(new Token("Literal", numberBuffer.join("")));
+ 		numberBuffer = [];
+ 	}
+ }
+
 }

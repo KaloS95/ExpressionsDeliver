@@ -1,63 +1,65 @@
 
 
 
-<!--<%@page contentType="text/html" pageEncoding="UTF-8"%>-->
+<!--<%@page contentType = "text/html" pageEncoding = "UTF-8"%>-->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
+ <head>
+ <meta http-equiv = "Content-Type" content = "text/html; charset = UTF-8">
+ <title>JSP Page</title>
+		<meta charset = "utf-8">
+		<meta name = "viewport" content = "width = device-width">
 		<title> Chart emulation </title>
-		<link rel="stylesheet" href="../css/Treant.css">
-		<link rel="stylesheet" href="../css/super-simple.css">
+		<link rel = "stylesheet" href = "../css/Treant.css">
+		<link rel = "stylesheet" href = "../css/super-simple.css">
 
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script src = "/socket.io/socket.io.js"></script>
+		<script src = "https://code.jquery.com/jquery-1.11.1.js"></script>
 
 
-		<script src="../js/raphael.js"></script>
-		<script src="../js/Treant.js"></script>
+		<script src = "../js/raphael.js"></script>
+		<script src = "../js/Treant.js"></script>
 		<script>
 			var socket;
 			var name;
+			var score=0;
 			$(function () {
 				socket = io();
-				socket.on('sendtree',function(tree){
+				socket.on('sendtree', function(tree){
 
 						new Treant(tree);
-						name=prompt("inserisci il tuo nome e cognome");
+						name = prompt("inserisci il tuo nome e cognome");
 						socket.emit('name', name);
 				});
 				//riceve lista caselle che sono state riempite
 				//completo tante caselle con giusto ris
-				socket.on('arraysender',function(ids){
+				socket.on('arraysender', function(ids){
 					for (var i = ids.length - 1; i >= 0; i--) {
-						document.getElementById(ids[i].cell).disabled=true;
-						document.getElementById(ids[i].cell).value=document.getElementById(ids[i].cell).getAttribute("data-result");
-						document.getElementById("author_"+ids[i].cell).value=ids[i].author;
+						document.getElementById(ids[i].cell).disabled = true;
+						document.getElementById(ids[i].cell).value = document.getElementById(ids[i].cell).getAttribute("data-result");
+						document.getElementById("author_"+ids[i].cell).value = ids[i].author;
 					}
 				});
 				//man mano che un risultato corretto 
 				//completo una casella con giusto ris
-				socket.on('notifyall',function(casella, author){
+				socket.on('notifyall', function(casella, author){
 					//alert(""+casella+"");
-					document.getElementById(casella).disabled=true;
-					document.getElementById(casella).value=document.getElementById(casella).getAttribute("data-result");
-					document.getElementById("author_"+casella).value=author;
+					document.getElementById(casella).disabled = true;
+					document.getElementById(casella).value = document.getElementById(casella).getAttribute("data-result");
+					document.getElementById("author_"+casella).value = author;
 				});
 			});
 		</script>
 
 		<script>
 			function check (event) {
-				if(event.keyCode===13){
+				if(event.keyCode === 13){
 					if(parseFloat(event.target.value) == event.target.getAttribute("data-result")){
 						//alert(event.target.value);
 						//in id-cas segno la casella completata
 						socket.emit('id-cas', event.target.getAttribute("id"));
-
+						score++;
+						document.getElementById("score").innerHTML = score;
 					}
 					else{alert("Wrong! Capra");}
 					
@@ -69,17 +71,17 @@
 
 
 		</script>
-    </head>
-    <body>
-    	<div id="expr"></div>
-		<div class="chart" id="tree-simple" style="width: 80%; ">
+ </head>
+ <body>
+ 	<div id = "expr"></div>
+		<div class = "chart" id = "tree-simple" style = "width: 80%; ">
 		</div>
-
-		<!--script src="../trees/super-simple.js"></script>
+		<h1>Score: <div id="score">0</div></h1>
+		<!--script src = "../trees/super-simple.js"></script>
 
 		<script>
 			new Treant(simple_chart_config);
 		</script-->
 
-    </body>
+ </body>
 </html>

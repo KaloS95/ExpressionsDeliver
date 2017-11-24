@@ -1,11 +1,11 @@
 //Tokenizza la stringa in formato array
-function Token(type, value) {
+Token = function Token(type, value) {
 	this.type = type;
 	this.value = value;
 }
 
 function isComma(ch) {
-	return /,/.test(ch);
+	return /, /.test(ch);
 }
 
 function isDigit(ch) {
@@ -28,18 +28,18 @@ function isRightParenthesis(ch) {
 	return /\)/.test(ch);
 }
 
-function tokenize(str) {
+tokenize = function tokenize(str) {
 	str.replace(/\s+/g, "");
-	str=str.split("");
+	str = str.split("");
 
-	var result=[];
-	var letterBuffer=[];
-	var numberBuffer=[];
+	var result = [];
+	var letterBuffer = [];
+	var numberBuffer = [];
 
 	str.forEach(function (char, idx) {
 		if(isDigit(char)) {
 			numberBuffer.push(char);
-		} else if(char==".") {
+		} else if(char == ".") {
 			numberBuffer.push(char);
 		} else if (isLetter(char)) {
 			if(numberBuffer.length) {
@@ -54,7 +54,7 @@ function tokenize(str) {
 		} else if (isLeftParenthesis(char)) {
 			if(letterBuffer.length) {
 				result.push(new Token("Function", letterBuffer.join("")));
-				letterBuffer=[];
+				letterBuffer = [];
 			} else if(numberBuffer.length) {
 				emptyNumberBufferAsLiteral();
 				result.push(new Token("Operator", "*"));
@@ -82,18 +82,18 @@ function tokenize(str) {
 		var l = letterBuffer.length;
 		for (var i = 0; i < l; i++) {
 			result.push(new Token("Variable", letterBuffer[i]));
-          if(i< l-1) { //there are more Variables left
-          	result.push(new Token("Operator", "*"));
-          }
-      }
-      letterBuffer = [];
+  if(i< l-1) { //there are more Variables left
+  	result.push(new Token("Operator", "*"));
   }
+ }
+ letterBuffer = [];
+ }
 
-  function emptyNumberBufferAsLiteral() {
-  	if(numberBuffer.length) {
-  		result.push(new Token("Literal", numberBuffer.join("")));
-  		numberBuffer=[];
-  	}
-  }
+ function emptyNumberBufferAsLiteral() {
+ 	if(numberBuffer.length) {
+ 		result.push(new Token("Literal", numberBuffer.join("")));
+ 		numberBuffer = [];
+ 	}
+ }
 
 }
