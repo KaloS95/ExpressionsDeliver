@@ -1,3 +1,4 @@
+//Crea Abstract Syntax Tree
 function ASTNode(token, leftChildNode, rightChildNode) {
 	this.token = token.value;
 	this.leftChildNode = leftChildNode;
@@ -15,7 +16,9 @@ function parse(inp){
 		this.push(new ASTNode(operatorToken, leftChildNode, rightChildNode));
 	}
 
+
 	Array.prototype.peek = function() {
+		//dammi l'ultimo carattere
 		return this.slice(-1)[0];
 	};
 
@@ -106,6 +109,7 @@ function parse(inp){
 		}
 	});
 
+//peek analogo al pop ma non modifica lo Stack
 	while(opStack.peek()) {
 		outStack.addNode(opStack.pop());
 	}

@@ -23,9 +23,7 @@ var ids_cell = [];
 
 //amount sa quanti alberi di espressioni sono presenti
 var amount = require(__dirname+'/clients/trees/number_trees.json').amount;
-/*console.log(parseInt(Math.random()*amount));
-console.log(parseInt(Math.random()*amount));
-console.log(parseInt(Math.random()*amount));*/
+
 
 //prende un numero randomico dal set e 
 //require apre jsons in modo non rischioso
@@ -43,6 +41,10 @@ app.get('/addexpressions', function(req, res){
 res.sendFile(__dirname + '/clients/html/addexpressions.html');
 });
 
+app.post('/addexpressions', function(req, res){
+res.sendFile(__dirname + '/clients/html/addexpressions.html');
+});
+
 
 
 app.get('/sendexp', function(req, res){
@@ -50,8 +52,9 @@ app.get('/sendexp', function(req, res){
 	//var amount = require(__dirname+'/clients/trees/number_trees.json').amount;
 	var amount = JSON.parse(fs.readFileSync(__dirname+'/clients/trees/number_trees.json')).amount;
 	//prendo l'espressione e la salvo in ris
-	console.log(req.query.expression);
+	//parso l'espressione in un Json che mi rappresenta l'albero
 	var ris = (parser.parse(req.query.expression));
+
 	//crea l'albero dall'espressione appena presa
 	var tree = tregen.TreeGenesis(ris);
 
@@ -63,9 +66,11 @@ app.get('/sendexp', function(req, res){
 		else{console.log(err);}
 		
 	});
+
+	res.sendFile(__dirname + '/clients/html/expsent.html');
+
 	
 });
-
 
 
 var id_n = 0;
@@ -95,7 +100,27 @@ var create_socket = function(socket)
 	socket.on('name', function(arg){
 		name = arg;
 	});
+
+
+
+
+	socket.on('clicked',function(){
+		console.log("sono dentro a clicked")
+
+
+
+	app.get('/addexpressions', function(req, res){
+
+		console.log("sono dentro alla get")
+	res.sendFile(__dirname + '/clients/html/addexpressions.html');
+	});
+
+
+})
+
 	}
+
+
 //quando qualcuno si connette mi simula la creazione del "ponte" struttura socket mantenuta e non come nei browser che viene killata
 io.on('connection', create_socket);
 
