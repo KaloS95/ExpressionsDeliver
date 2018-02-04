@@ -19,6 +19,7 @@ var tregen = require(__dirname+'/treeGenesis.js');
 
 
 var ids_cell = [];
+var punteggi = [];
 
 
 //amount sa quanti alberi di espressioni sono presenti
@@ -80,43 +81,58 @@ var create_socket = function(socket)
 	var id = id_n;
 	id_n++;
 	var name;
+	var score=0;
+	var color;
 	
 	console.log('user ' + id + ' connected');
+
 	socket.emit('sendtree', tree);
+
 	socket.emit('arraysender', ids_cell);
+
+
 	socket.on('disconnect', function()
 		{
 		console.log('user ' + id + ' disconnected');
 		});
 	//stringa che ricevo in id_casella
-	socket.on('id-cas', function(id_casella)
+	socket.on('id-cas', function(id_casella, score)
 		{
 		console.log('user ' + id + ' completed '+ id_casella);
 		//quando ricevo che l'id della casella ha il risultato corretto, mando broadcast
 		io.emit('notifyall', id_casella, name);
 		//popola array di caselle disabled
-		ids_cell.push({cell: id_casella, author: name});
+		ids_cell.push({cell: id_casella, author: name, color:color});
+
+		//se l'author è lo steso incrementagli il punteggio...
+		var index = punteggi.findIndex(x => x.author==name);
+		if(index==-1){
+			punteggi.push({author: name, score:score, color:color})
+		}else{
+			punteggi[index].score=score;
+		}
+		
+
+		io.emit('punteggi',punteggi);
+
+		
+
 		});
+
 	socket.on('name', function(arg){
 		name = arg;
 	});
-
-
-
-
-	socket.on('clicked',function(){
-		console.log("sono dentro a clicked")
-
-
-
-	app.get('/addexpressions', function(req, res){
-
-		console.log("sono dentro alla get")
-	res.sendFile(__dirname + '/clients/html/addexpressions.html');
-	});
-
-
-})
+	socket.on('color', function(col){
+		color=col;
+	})
+	socket.on('score', function(score){
+		score=score;
+	})
+	socket.on('displaylista',function () {
+		
+		punteggi.push({author: name, score:score, color:color})
+		socket.emit('mostralista',punteggi);
+	})
 
 	}
 

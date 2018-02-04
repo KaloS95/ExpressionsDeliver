@@ -1,0 +1,31 @@
+ul {
+  list-style-type: none; /* no default bullets */
+}
+
+li { 
+  font-family: Arial;
+  font-size: 18px;
+}
+
+li:before { /* the custom styled bullets */
+  background-color: #14CCBB;
+  border-radius: 50%;
+  content: "";
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  height: 10px;
+  width: 10px;
+}
+
+
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
