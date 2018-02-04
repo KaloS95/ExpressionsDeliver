@@ -1,0 +1,16 @@
+{"chart": {"container": "#tree-simple", "rootOrientation": "SOUTH"}, "nodeStructure": {
+"innerHTML": "-<br/><input id='1' type='text' onkeydown='check(event)' data-result='-609'/><br/><input id='author_1'' type='text' disabled onkeydown='checkAuthor(event)' />",
+"children": [
+{"text": { "name": 6 }}
+, 
+{
+"innerHTML": "*<br/><input id='0' type='text' onkeydown='check(event)' data-result='615'/><br/><input id='author_0'' type='text' disabled onkeydown='checkAuthor(event)' />",
+"children": [
+{"text": { "name": 5 }}
+, 
+{"text": { "name": 123 }}
+]
+}
+]
+}
+}

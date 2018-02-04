@@ -21,6 +21,8 @@ var tregen = require(__dirname+'/treeGenesis.js');
 var ids_cell = [];
 var punteggi = [];
 
+var chosen_nr;
+
 
 //amount sa quanti alberi di espressioni sono presenti
 var amount = require(__dirname+'/clients/trees/number_trees.json').amount;
@@ -28,7 +30,8 @@ var amount = require(__dirname+'/clients/trees/number_trees.json').amount;
 
 //prende un numero randomico dal set e 
 //require apre jsons in modo non rischioso
-var tree = require(__dirname+'/clients/trees/tree'+/*parseInt(Math.random()*amount)*/0+'.json');
+chosen_nr=/*parseInt(Math.random()*amount)*/2;
+var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');;
 //prima di questa riga i file in quella cartella non possono essere caricati altrimenti
 app.use(express.static(__dirname+'/clients'));
 
@@ -54,7 +57,13 @@ app.get('/sendexp', function(req, res){
 	var amount = JSON.parse(fs.readFileSync(__dirname+'/clients/trees/number_trees.json')).amount;
 	//prendo l'espressione e la salvo in ris
 	//parso l'espressione in un Json che mi rappresenta l'albero
+	var exp= JSON.stringify({value: req.query.expression});
+	
 	var ris = (parser.parse(req.query.expression));
+
+	
+	
+
 
 	//crea l'albero dall'espressione appena presa
 	var tree = tregen.TreeGenesis(ris);
@@ -68,6 +77,19 @@ app.get('/sendexp', function(req, res){
 		
 	});
 
+	fs.writeFile(__dirname+"/clients/expressions/exp"+amount+".json", exp, function(err){
+		if(!err){fs.writeFile(__dirname+"/clients/expressions/number_expressions.json", '{"amount": '+(parseInt(amount)+1)+"}", function(err){
+			if(err){console.log(err);}
+			});
+		}
+		else{console.log(err);}
+		
+	});
+
+
+
+
+
 	res.sendFile(__dirname + '/clients/html/expsent.html');
 
 	
@@ -75,6 +97,7 @@ app.get('/sendexp', function(req, res){
 
 
 var id_n = 0;
+var exp=require(__dirname+'/clients/expressions/exp'+chosen_nr+'.json').value;
 
 var create_socket = function(socket)
 	{
@@ -83,10 +106,14 @@ var create_socket = function(socket)
 	var name;
 	var score=0;
 	var color;
+	var esp=exp;
+	console.log("exp:"+exp);
 	
 	console.log('user ' + id + ' connected');
 
-	socket.emit('sendtree', tree);
+
+	
+	socket.emit('sendtree', tree, esp);
 
 	socket.emit('arraysender', ids_cell);
 
