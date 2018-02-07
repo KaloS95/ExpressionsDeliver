@@ -72,6 +72,14 @@
 					        		})
 				})
 
+				socket.on('punteggi',function(punteggi){
+								punteggi=punteggi;
+								$("#lista").empty();
+									$.each(punteggi , function(i,v) {
+					        			$("#lista").append("<li>" + v.author+":"+v.score + "</li>") ;
+					        		})
+						});
+
 
 
 			});

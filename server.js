@@ -121,7 +121,16 @@ var create_socket = function(socket)
 	socket.on('disconnect', function()
 		{
 		console.log('user ' + id + ' disconnected');
+		var index = punteggi.findIndex(x => x.author==name);
+		if(index==-1){
+			
+		}else{
+			punteggi.splice(index,1)		}
+			console.log(punteggi)
 		});
+
+
+
 	//stringa che ricevo in id_casella
 	socket.on('id-cas', function(id_casella, score)
 		{
@@ -158,8 +167,12 @@ var create_socket = function(socket)
 	socket.on('displaylista',function () {
 		
 		punteggi.push({author: name, score:score, color:color})
-		socket.emit('mostralista',punteggi);
+		console.log("displaylista"+punteggi)
+		io.emit('mostralista',punteggi);
 	})
+
+
+	
 
 	}
 
