@@ -8,8 +8,8 @@ function TreeGenesis(postString){
 		var val = postString[i];
 		i--;
 		if(val.type == 'Operator'){
-			var left = readNext();
 			var right = readNext();
+			var left = readNext();
 
 			var ris;
 			switch(val.value){

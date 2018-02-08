@@ -30,7 +30,7 @@ var amount = require(__dirname+'/clients/trees/number_trees.json').amount;
 
 //prende un numero randomico dal set e 
 //require apre jsons in modo non rischioso
-chosen_nr=/*parseInt(Math.random()*amount)*/2;
+chosen_nr=/*parseInt(Math.random()*amount)*/3;
 var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');;
 //prima di questa riga i file in quella cartella non possono essere caricati altrimenti
 app.use(express.static(__dirname+'/clients'));

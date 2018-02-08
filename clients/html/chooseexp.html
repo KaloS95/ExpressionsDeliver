@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Seleziona l'espressione da mettere in gioco</title>
+	<link rel = "stylesheet" href = "../css/chooseexp.css">
+	<script src = "https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src = "/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		var socket;
+		var espressioni = [];
+
+		$(function(){
+			socket = io();
+			socket.on('ricevi_exp_presenti', function(exp){
+
+			});
+
+
+			$('<label class="container">'+"dd"+
+  			'<input type="radio" name="radio">'+
+  			'<span class="checkmark"></span>'+
+			'</label>').appendTo('#bigger');
+		})
+	</script>
+
+</head>
+<body>
+
+<h1>Seleziona l'espressione da mettere in gioco</h1>
+<div id="bigger">
+</div>
+
+<label class="container">ff
+  <input type="radio" name="radio">
+  <span class="checkmark"></span>
+</label>
+
+
+</body>
+</html>
