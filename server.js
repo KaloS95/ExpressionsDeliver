@@ -8,6 +8,7 @@ var http = require('http').Server(app);
 //creo istanza io, struttura costruttore
 var io = require('socket.io')(http);
 
+
 //files access
 var fs = require('fs');
 
@@ -20,18 +21,23 @@ var tregen = require(__dirname+'/treeGenesis.js');
 
 var ids_cell = [];
 var punteggi = [];
+var espressioni =[];
 
 var chosen_nr;
 
 
 //amount sa quanti alberi di espressioni sono presenti
 var amount = require(__dirname+'/clients/trees/number_trees.json').amount;
+for (var i = amount - 1; i >= 0; i--) {
+	var valore=require(__dirname+'/clients/expressions/exp'+i+'.json').value;
+	espressioni.push(valore);
+	}
 
 
 //prende un numero randomico dal set e 
 //require apre jsons in modo non rischioso
 chosen_nr=/*parseInt(Math.random()*amount)*/3;
-var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');;
+var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');
 //prima di questa riga i file in quella cartella non possono essere caricati altrimenti
 app.use(express.static(__dirname+'/clients'));
 
@@ -48,6 +54,12 @@ res.sendFile(__dirname + '/clients/html/addexpressions.html');
 app.post('/addexpressions', function(req, res){
 res.sendFile(__dirname + '/clients/html/addexpressions.html');
 });
+
+app.get('/chooseexp', function(req, res){
+
+res.sendFile(__dirname + '/clients/html/chooseexp.html');
+});
+
 
 
 
@@ -171,6 +183,11 @@ var create_socket = function(socket)
 		io.emit('mostralista',punteggi);
 	})
 
+//================================parte prof===================================================
+socket.emit('ricevi_exp_presenti',espressioni);
+
+
+
 
 	
 
@@ -178,10 +195,19 @@ var create_socket = function(socket)
 
 
 //quando qualcuno si connette mi simula la creazione del "ponte" struttura socket mantenuta e non come nei browser che viene killata
-io.on('connection', create_socket);
+io.on('connection', create_socket)//, create_socket1);
+//io.on('connection',create_socket1);
+//io1.on('connection',create_socket1);
 
 
+var pippo = function(socket){
+	socket.emit('ricevi_exp_presenti',"blabla");
+}
 
 http.listen(3000, function(){
-	console.log('listening on *:3000');
+	console.log('Server is running on port 3000 for students');
 });
+/*
+http.listen(2000,function(){
+        console.log("Server is running on port 2000 for professor");
+    });*/

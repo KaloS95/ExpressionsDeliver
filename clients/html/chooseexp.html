@@ -9,18 +9,23 @@
 	<script type="text/javascript">
 		var socket;
 		var espressioni = [];
-
+		var esp=[];
 		$(function(){
+			console.log("display pag")
 			socket = io();
+			
 			socket.on('ricevi_exp_presenti', function(exp){
-
-			});
-
-
-			$('<label class="container">'+"dd"+
-  			'<input type="radio" name="radio">'+
+				esp=exp;
+				for (var i = exp.length - 1; i >= 0; i--) {
+					$('<label class="container">'+exp[i]+
+  			'<input type="radio"  id="r'+i+'" name="radio">'+
   			'<span class="checkmark"></span>'+
 			'</label>').appendTo('#bigger');
+				}
+				
+			});
+
+			
 		})
 	</script>
 
@@ -31,10 +36,6 @@
 <div id="bigger">
 </div>
 
-<label class="container">ff
-  <input type="radio" name="radio">
-  <span class="checkmark"></span>
-</label>
 
 
 </body>
