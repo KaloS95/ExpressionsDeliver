@@ -23,7 +23,7 @@ var ids_cell = [];
 var punteggi = [];
 var espressioni =[];
 
-var chosen_nr;
+
 
 
 //amount sa quanti alberi di espressioni sono presenti
@@ -36,8 +36,8 @@ for (var i = amount - 1; i >= 0; i--) {
 
 //prende un numero randomico dal set e 
 //require apre jsons in modo non rischioso
-chosen_nr=/*parseInt(Math.random()*amount)*/3;
-var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');
+//chosen_nr=/*parseInt(Math.random()*amount)*/3;
+//
 //prima di questa riga i file in quella cartella non possono essere caricati altrimenti
 app.use(express.static(__dirname+'/clients'));
 
@@ -109,6 +109,8 @@ app.get('/sendexp', function(req, res){
 
 
 var id_n = 0;
+chosen_nr=0;
+var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');;
 var exp=require(__dirname+'/clients/expressions/exp'+chosen_nr+'.json').value;
 
 var create_socket = function(socket)
@@ -119,10 +121,21 @@ var create_socket = function(socket)
 	var score=0;
 	var color;
 	var esp=exp;
-	console.log("exp:"+exp);
+	//console.log("exp:"+exp);
 	
 	console.log('user ' + id + ' connected');
+	socket.on('exp_selezionata',function(selected){
+		chosen_nr=selected;
+		console.log("chosen_nr"+chosen_nr)
+		tree=require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');
+		exp=require(__dirname+'/clients/expressions/exp'+chosen_nr+'.json').value;
 
+
+		//svuota tutti i punteggi
+		ids_cell = [];
+		punteggi = [];
+	})
+		
 
 	
 	socket.emit('sendtree', tree, esp);
@@ -130,16 +143,7 @@ var create_socket = function(socket)
 	socket.emit('arraysender', ids_cell);
 
 
-	socket.on('disconnect', function()
-		{
-		console.log('user ' + id + ' disconnected');
-		var index = punteggi.findIndex(x => x.author==name);
-		if(index==-1){
-			
-		}else{
-			punteggi.splice(index,1)		}
-			console.log(punteggi)
-		});
+	
 
 
 
@@ -183,6 +187,21 @@ var create_socket = function(socket)
 		io.emit('mostralista',punteggi);
 	})
 
+
+
+
+	
+
+socket.on('disconnect', function()
+		{
+		console.log('user ' + id + ' disconnected');
+		var index = punteggi.findIndex(x => x.author==name);
+		if(index==-1){
+			
+		}else{
+			punteggi.splice(index,1)		}
+			console.log(punteggi)
+		});
 //================================parte prof===================================================
 socket.emit('ricevi_exp_presenti',espressioni);
 
@@ -199,11 +218,11 @@ io.on('connection', create_socket)//, create_socket1);
 //io.on('connection',create_socket1);
 //io1.on('connection',create_socket1);
 
-
+/*
 var pippo = function(socket){
-	socket.emit('ricevi_exp_presenti',"blabla");
+	console.log("pippo")
 }
-
+*/
 http.listen(3000, function(){
 	console.log('Server is running on port 3000 for students');
 });

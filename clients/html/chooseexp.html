@@ -16,9 +16,10 @@
 			
 			socket.on('ricevi_exp_presenti', function(exp){
 				esp=exp;
-				for (var i = exp.length - 1; i >= 0; i--) {
-					$('<label class="container">'+exp[i]+
-  			'<input type="radio"  id="r'+i+'" name="radio">'+
+				console.log("==>"+exp)
+				for (var i = 1; i <= exp.length; i++) {
+					$('<label class="container">'+exp[exp.length-i]+
+  			'<input type="radio"  id="'+(i-1)+'" name="radio" value="'+exp[exp.length-i]+'">'+
   			'<span class="checkmark"></span>'+
 			'</label>').appendTo('#bigger');
 				}
@@ -29,12 +30,43 @@
 		})
 	</script>
 
+			<script>
+				var selected;
+			document.addEventListener('keydown', function(e) {
+  				if ( e.keyCode == 13 ) {
+  					var tmp=document.querySelector('input[name = "radio"]:checked').id;
+  					selected=tmp;
+    				console.log(selected);
+    				socket.emit('exp_selezionata',selected)
+  					}
+			});
+
+			function f1(){
+				var tmp=document.querySelector('input[name = "radio"]:checked').id;
+  					selected=tmp;
+    				console.log(selected);
+    				socket.emit('exp_selezionata',selected)
+
+			}
+
+
+		</script>
+
 </head>
 <body>
 
 <h1>Seleziona l'espressione da mettere in gioco</h1>
+<div id="space">
+		<button type="button" id="button1" onclick="f1();">Chose!Make the game start!</button> 
+	
+</div>
+<br>
 <div id="bigger">
 </div>
+
+
+</body>
+</html>
 
 
 

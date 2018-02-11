@@ -24,8 +24,9 @@
 			var punteggi = [];
 			$(function () {
 				socket = io();
+				//socket.emit('start', data, function(response){
 				socket.on('sendtree', function(tree,esp){
-
+						console.log("sendtree")
 						new Treant(tree);
 						$('<h1>'+esp+'</h1>').appendTo('#exp');
 						name = prompt("inserisci il tuo nome e cognome");
