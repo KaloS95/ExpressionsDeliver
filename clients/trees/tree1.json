@@ -1,16 +1,23 @@
 {"chart": {"container": "#tree-simple", "rootOrientation": "SOUTH"}, "nodeStructure": {
-"innerHTML": "+<br/><input id='1' type='text' onkeydown='check(event)' data-result='9'/><br/><input id='author_1'' type='text' disabled onkeydown='checkAuthor(event)' />",
+"innerHTML": "+<br/><input id='2' type='text' onkeydown='check(event)' data-result='100'/><br/><input id='author_2'' type='text' disabled onkeydown='checkAuthor(event)' />",
 "children": [
-{"text": { "name": 6 }}
-, 
 {
-"innerHTML": "+<br/><input id='0' type='text' onkeydown='check(event)' data-result='3'/><br/><input id='author_0'' type='text' disabled onkeydown='checkAuthor(event)' />",
+"innerHTML": "-<br/><input id='1' type='text' onkeydown='check(event)' data-result='70'/><br/><input id='author_1'' type='text' disabled onkeydown='checkAuthor(event)' />",
 "children": [
-{"text": { "name": 2 }}
+{
+"innerHTML": "*<br/><input id='0' type='text' onkeydown='check(event)' data-result='72'/><br/><input id='author_0'' type='text' disabled onkeydown='checkAuthor(event)' />",
+"children": [
+{"text": { "name": 12 }}
 , 
-{"text": { "name": 1 }}
+{"text": { "name": 6 }}
 ]
 }
+, 
+{"text": { "name": 2 }}
+]
+}
+, 
+{"text": { "name": 30 }}
 ]
 }
 }
