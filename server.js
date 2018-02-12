@@ -112,7 +112,7 @@ var id_n = 0;
 chosen_nr=0;
 var tree = require(__dirname+'/clients/trees/tree'+chosen_nr+'.json');;
 var exp=require(__dirname+'/clients/expressions/exp'+chosen_nr+'.json').value;
-
+var reload=false;
 var create_socket = function(socket)
 	{
 	var id = id_n;
@@ -134,6 +134,8 @@ var create_socket = function(socket)
 		//svuota tutti i punteggi
 		ids_cell = [];
 		punteggi = [];
+		reload=true;
+		io.emit('reload',reload)
 	})
 		
 
@@ -142,8 +144,6 @@ var create_socket = function(socket)
 
 	socket.emit('arraysender', ids_cell);
 
-
-	
 
 
 

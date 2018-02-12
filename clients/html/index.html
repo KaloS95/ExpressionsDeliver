@@ -81,7 +81,15 @@
 					        		})
 						});
 
-
+				socket.on('reload',function(reload){
+					if(reload==true){
+						
+						
+						alert("the page will be reloaded");
+						location.reload();
+						reload=false;
+					}
+				})
 
 			});
 
