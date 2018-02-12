@@ -7,7 +7,7 @@ li {
   font-size: 18px;
 }
 
-li:before { /* the custom styled bullets */
+li:before {  /*the custom styled bullets */
   background-color: #14CCBB;
   border-radius: 50%;
   content: "";
@@ -26,6 +26,6 @@ li:before { /* the custom styled bullets */
   bottom: 0;
   left: 0;
   padding: 1rem;
-  background-color: #efefef;
+  background-color: #fea;;
   text-align: center;
 }

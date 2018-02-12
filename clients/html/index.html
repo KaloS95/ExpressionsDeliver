@@ -80,9 +80,17 @@
 
 				socket.on('mostralista', function(punteggi){
 					punteggi=punteggi;
+					//$('head').append('<style>p:hover{color:red;}</style>');
 								$("#lista").empty();
 									$.each(punteggi , function(i,v) {
-					        			$("#lista").append("<li>" + v.author+":"+v.score + "</li>") ;
+										//($('#element')[0], ':before').setProperty ("background-color", ""+v.color+"", null);
+										//$('head').append('<style>li:before{color:'+v.color+';}</style>');
+					        			$("#lista").append("<li>" + v.author+":"+v.score + "</li>");
+					        			/*$("li:before").addRule({
+										    content: "foo",
+										    color: ""+v.color+"",
+										    fontSize: "32px"
+										});*/
 					        		})
 				})
 
@@ -90,7 +98,9 @@
 								punteggi=punteggi;
 								$("#lista").empty();
 									$.each(punteggi , function(i,v) {
+										/*($('#element')[0], ':before').setProperty ("background-color", ""+v.color+"", null);*/
 					        			$("#lista").append("<li>" + v.author+":"+v.score + "</li>") ;
+					        			//$('head').append('<style>li:before{color:'+v.color+';}</style>');
 					        		})
 						});
 
