@@ -12,7 +12,7 @@
 
 		<script src = "/socket.io/socket.io.js"></script>
 		<script src = "https://code.jquery.com/jquery-1.11.1.js"></script>
-		
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 		<script src = "../js/raphael.js"></script>
@@ -28,13 +28,26 @@
 				socket.on('sendtree', function(tree,esp){
 						console.log("sendtree")
 						new Treant(tree);
+						$("#exp").empty();
 						$('<h1>'+esp+'</h1>').appendTo('#exp');
-						name = prompt("inserisci il tuo nome e cognome");
-						socket.emit('name', name);
+						//name = prompt("inserisci il tuo nome e cognome");
+						//localStorage.setItem("savedname", name+"");
+
+
+
+							swal("What's your name?", {
+							  content: "input",
+							})
+							.then((value) => {
+							  name= value;
+							  socket.emit('name', name);
 						socket.emit('score',score);
 						var randomColor = "#"+Math.floor(Math.random() * 0x1000000).toString(16);
 						socket.emit('color',randomColor);
 						socket.emit('displaylista');
+							});
+
+						
 
 
 				});
@@ -85,7 +98,7 @@
 					if(reload==true){
 						
 						
-						alert("the page will be reloaded");
+						//alert("the page will be reloaded");
 						location.reload();
 						reload=false;
 					}
