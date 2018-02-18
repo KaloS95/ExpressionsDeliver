@@ -31,7 +31,7 @@ function TreeGenesis(postString){
 			return{string:str, value:ris};
 		}
 		else{
-			str += '{"text": { "name": '+val.value+' }}\n';
+ 			str += '{"text": { "name": '+val.value+' }}\n';
 			return{string:str, value:parseFloat(val.value)};
 		}
 	};

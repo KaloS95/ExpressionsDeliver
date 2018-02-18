@@ -1,7 +1,7 @@
 //quando viene importato cosa deve essere disponibile dall'esterno
 module.exports = {parse};
 
-
+//parse me la da in reverse polish notation
 function parse(inp){
 	var outQueue = [];
 	var opStack = [];

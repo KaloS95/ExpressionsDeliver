@@ -1,4 +1,4 @@
-//Crea Abstract Syntax Tree
+//Crea Abstract Syntax Tree Che non utilizziamo in realtà perchè abbiamo treeGenesis
 function ASTNode(token, leftChildNode, rightChildNode) {
 	this.token = token.value;
 	this.leftChildNode = leftChildNode;

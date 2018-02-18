@@ -1,3 +1,5 @@
+module.exports={Token}
+module.exports={tokenize}
 //Tokenizza la stringa in formato array
 Token = function Token(type, value) {
 	this.type = type;
@@ -29,7 +31,9 @@ function isRightParenthesis(ch) {
 }
 
 tokenize = function tokenize(str) {
+	//rimuove spazi
 	str.replace(/\s+/g, "");
+	//converte in un array di caratteri
 	str = str.split("");
 
 	var result = [];

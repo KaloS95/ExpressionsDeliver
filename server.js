@@ -1,7 +1,6 @@
-
 //http server
 var express = require('express');
-var app = express();
+var app = express();   
 var http = require('http').Server(app);
 
 //socket io
@@ -60,7 +59,10 @@ app.get('/chooseexp', function(req, res){
 res.sendFile(__dirname + '/clients/html/chooseexp.html');
 });
 
+app.post('/chooseexp', function(req, res){
 
+res.sendFile(__dirname + '/clients/html/chooseexp.html');
+});
 
 
 app.get('/sendexp', function(req, res){
@@ -75,6 +77,7 @@ app.get('/sendexp', function(req, res){
 
 	
 	
+
 
 
 	//crea l'albero dall'espressione appena presa
@@ -121,6 +124,7 @@ var create_socket = function(socket)
 	var score=0;
 	var color;
 	var esp=exp;
+	var todelete;
 	//console.log("exp:"+exp);
 	
 	console.log('user ' + id + ' connected');
@@ -137,8 +141,7 @@ var create_socket = function(socket)
 		reload=true;
 		io.emit('reload',reload)
 	})
-		
-
+	
 	
 	socket.emit('sendtree', tree, esp);
 
@@ -183,7 +186,10 @@ var create_socket = function(socket)
 	socket.on('displaylista',function () {
 		
 		punteggi.push({author: name, score:score, color:color})
-		console.log("displaylista"+punteggi)
+		for (var i = punteggi.length - 1; i >= 0; i--) {
+			console.log("displaylista"+punteggi[i].author+","+punteggi[i].score)
+		}
+		
 		io.emit('mostralista',punteggi);
 	})
 
@@ -200,7 +206,6 @@ socket.on('disconnect', function()
 			
 		}else{
 			punteggi.splice(index,1)		}
-			console.log(punteggi)
 		});
 //================================parte prof===================================================
 socket.emit('ricevi_exp_presenti',espressioni);
