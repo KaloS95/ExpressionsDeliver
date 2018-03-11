@@ -1,7 +1,7 @@
 //http server
 var express = require('express');
 var app = express();   
-var http = require('http').Server(app);
+var http = require('https').Server(app);
 
 //socket io
 //creo istanza io, struttura costruttore
@@ -124,7 +124,7 @@ var create_socket = function(socket)
 	var score=0;
 	var color;
 	var esp=exp;
-	var todelete;
+	//http://localhost:3000/var todelete;
 	//console.log("exp:"+exp);
 	
 	console.log('user ' + id + ' connected');

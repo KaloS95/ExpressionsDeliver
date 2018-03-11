@@ -26,7 +26,7 @@
 				socket = io();
 				//socket.emit('start', data, function(response){
 				socket.on('sendtree', function(tree,esp){
-						console.log("sendtree")
+						//console.log("sendtree")
 						new Treant(tree);
 						$("#exp").empty();
 						$('<h1>'+esp+'</h1>').appendTo('#exp');
