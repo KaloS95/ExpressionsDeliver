@@ -1,7 +1,7 @@
 //http server
 var express = require('express');
 var app = express();   
-var http = require('https').Server(app);
+var http = require('http').Server(app);
 
 //socket io
 //creo istanza io, struttura costruttore
